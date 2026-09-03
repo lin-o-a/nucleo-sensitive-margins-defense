@@ -24,7 +24,8 @@ To research heavy loaded with NTT computations Nucleo board conditions to determ
 1. **Breadboard Interface:** Connected the Nucleo board with resistors via a breadboard using DuPont jumpers, referencing a common ground header.
 2. **Firmware Environment:** Created a dual-subproject setup in STM32CubeIDE with **TrustZone disabled**.
 3. **Software Libraries:** PQClean library installed on STM32CubeIDE.
-4. **Observation:** Nucleo LED indicators(LD1, LD2, LD3) signaled board normal functioning, BOR threshold, BOR reset, ST-LINK manager execution catching; SWV captured messages if **BOR threshold** or **BOR reset** were initiated.
+4. **Setup in STM32CubeProgrammer**: change BOR levels to 0, 1, 3, 4 on demand
+5. **Observation:** Nucleo LED indicators(LD1, LD2, LD3) signaled board normal functioning, BOR threshold, BOR reset, ST-LINK manager execution catching; SWV captured messages if **BOR threshold** or **BOR reset** were initiated.
 
 ---
 
