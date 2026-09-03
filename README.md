@@ -12,10 +12,32 @@ To research heavy loaded with NTT computations Nucleo board conditions to determ
 
 ---
 
-## Sensitive Margins Defence
+## Sensitive Margins Defensive Solutions
 1. Clock Gating
 2. Frequency Change
 3. Capacitors (ceramic and electrolytic)
+
+---
+
+## Initial Setup
+
+1. **Breadboard Interface:** Connected the Nucleo board with resistors via a breadboard using DuPont jumpers, referencing a common ground header.
+2. **Firmware Environment:** Created a dual-subproject setup in STM32CubeIDE with **TrustZone disabled**.
+3. **Observation:** Nucleo LED indicators(LD1, LD2, LD3) signaled board normal functioning, BOR threshold, BOR reset, ST-LINK manager execution catching; SWV captured messages if **BOR threshold** or **BOR reset** were initiated.
+
+---
+
+## Header Investigation & Hardware Hypotheses
+
+### Hypothesis 1: BOR threshold can be reached on every BOR threshold using Nucleo datasheet failure edges 
+* **Result:** BOR threshold was reached only for BOR level 3 but not for other BOR levels (0, 1, 4). Nucleo board worked as usual or in BOR clear reset state. 
+
+### Hypothesis 2: Higher load (without resistance increase) would move board out of to the BOR failure edges
+* **Result:** Board didn't achieve the threshold on failure edges because of added NOP or bus-switching code but worked in one of 3 states: usual work but with visible Voltage lack, BOR reset loop, ST-LINK code throttling.
+
+### Hypothesis 3: Tuning of resistors load would help to reach BOR thresholds on levels 0, 1, 4 besides level 3
+Different combinations of resistors including 47 Ohm, 10 Ohm, 110 Ohm, 150 Ohm, 220 Ohm set in series or in parallel didn't provide any threshold state besides level 3.
+* **Result:** No, it didn't but because of very high load was reached ST-LINK throttling of code execution(visible due to LD3 signalling) or clear BOR reset state or usual functioning with visible Voltage lack in system(it was a sign of BOR threshold in a set of cases for BOR level 3 that happened during cold power-on of the board).
 
 ---
 
